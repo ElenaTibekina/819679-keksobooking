@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Елена Тибекина](https://up.htmlacademy.ru/javascript/16/user/819679).
-* Наставник: `Неизвестно`.
+* Наставник: [Андрей Дос](https://htmlacademy.ru/profile/andreydos).
 
 ---
 
