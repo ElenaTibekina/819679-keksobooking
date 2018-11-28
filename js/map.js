@@ -40,6 +40,10 @@ var randomFeatureLength = Math.round(Math.random() * FEATURES.length);
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
+var author = {
+  avatar: 'img/avatars/user{{xx}}.png'
+};
+
 var offer = {
   title: getRandomValue(TITLES),
   address: '{{location.x}}, {{location.y}}',
@@ -52,6 +56,25 @@ var offer = {
   features: [],
   description: '',
   photos: [],
-  location: getValueInRange(minX, maxX), getValueInRange(minY, maxY)
 };
 
+var apartmentLocation = {
+  x: getValueInRange(minX, maxX),
+  y: getValueInRange(minY, maxY)
+}
+
+var cityMapPin = document.querySelector('.map__pins');
+var similarTemplate = document.querySelector('template').content;
+var mapPin = document.querySelector('.map__pin');
+var mapCard = similarTemplate.querySelector('.map__card');
+
+var renderMapPin = function () {
+  var pinWidth = 46;
+  var pinHeight = 64;
+
+  var pinElement = similarMapPin.cloneNode(true);
+  pinElement.querySelector('img').src = author.avatar;
+  pinElement.style.left = (apartmentLocation.x - pinWidth) + 'px';
+  pinElement.style.top = (apartmentLocation.y - pinHeight) + 'px';
+  return pinElement;
+};
