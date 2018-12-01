@@ -1,6 +1,6 @@
 'use strict';
 
-var  AD_PARAMETERS = [];
+var AD_PARAMETERS = [];
 var ADS = [];
 var adsNumber = 8;
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
@@ -30,14 +30,6 @@ var getValueInRange = function (min, max) {
 var getRandomValue = function (array) {
   return array[Math.floor(Math.random() * array.length)];
 };
-
-// перемешивает значения в массиве
-var shuffleRandomArray = function (array) {
-  return Math.floor(Math.random() * array.length);
-};
-
-// случайная длина массива FEATURES
-var randomFeatureLength = Math.round(Math.random() * FEATURES.length);
 
 // убирает класс .map--faded
 var map = document.querySelector('.map');
@@ -102,6 +94,7 @@ var renderCard = function () {
   cardElement.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для ' + offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ', выезд до ' + offer.checkout;
   cardElement.querySelector('.popup__features').innerHTML = addFeatureItem(offer.features);
+  cardElement.querySelectorAll('.popup__features > li').textContent = addItemClasses(offer.features);
   cardElement.querySelector('.popup__description').textContent = offer.description;
   cardElement.querySelector('.popup__photos').textContent.src = author.avatar;
   cardElement.style.left = (apartmentLocation.x - pinWidth) + 'px';
