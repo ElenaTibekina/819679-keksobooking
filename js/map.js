@@ -1,6 +1,5 @@
 'use strict';
 
-var AD_PARAMETERS = [];
 var ADS = [];
 var adsNumber = 8;
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
@@ -133,15 +132,14 @@ for (var i = 0; i < adsNumber; i++) {
     y: getValueInRange(minY, maxY)
   };
 
-  AD_PARAMETERS = {
-    author,
-    offer,
-    apartmentLocation};
-
+  ADS[i] = {
+    author: author,
+    offer: offer,
+    apartmentLocation: apartmentLocation
+  };
+  fragmentPins.appendChild(renderMapPin(ADS[i]));
 }
 
-ADS[i] = AD_PARAMETERS;
-fragmentPins.appendChild(renderMapPin(ADS[i]));
 fragmentCards.appendChild(renderCard(ADS[0]));
 
 cityMapPin.appendChild(fragmentPins);
