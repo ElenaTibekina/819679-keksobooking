@@ -37,12 +37,13 @@ map.classList.remove('map--faded');
 
 var cityMapPin = document.querySelector('.map__pins');
 var template = document.querySelector('template').content;
+
+// render mapPin from template
 var mapPin = document.querySelector('.map__pin');
+var pinWidth = 46;
+var pinHeight = 64;
 
 var renderMapPin = function () {
-  var pinWidth = 46;
-  var pinHeight = 64;
-
   var pinElement = mapPin.cloneNode(true);
   pinElement.querySelector('img').src = author.avatar;
   pinElement.style.left = (apartmentLocation.x - pinWidth) + 'px';
@@ -89,14 +90,14 @@ var renderCard = function () {
 
   cardElement.querySelector('.popup__title').textContent = offer.title;
   cardElement.querySelector('.popup__text--address').textContent = offer.address;
-  cardElement.querySelector('.popup__price').textContent = offer.price + '&#x20bd;/ночь';
+  cardElement.querySelector('.popup__text--price').textContent = offer.price + '&#x20bd;/ночь';
   cardElement.querySelector('.popup__type').textContent = getHouseType(offer.type);
   cardElement.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для ' + offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ', выезд до ' + offer.checkout;
   cardElement.querySelector('.popup__features').innerHTML = addFeatureItem(offer.features);
   cardElement.querySelectorAll('.popup__features > li').textContent = addItemClasses(offer.features);
   cardElement.querySelector('.popup__description').textContent = offer.description;
-  cardElement.querySelector('.popup__photos').textContent.src = author.avatar;
+  cardElement.querySelector('.popup__avatar').src = author.avatar;
   cardElement.style.left = (apartmentLocation.x - pinWidth) + 'px';
   cardElement.style.top = (apartmentLocation.y - pinHeight) + 'px';
 
@@ -132,11 +133,16 @@ for (var i = 0; i < adsNumber; i++) {
     y: getValueInRange(minY, maxY)
   };
 
-  AD_PARAMETERS = [author, offer, apartmentLocation];
-  ADS[i] = AD_PARAMETERS;
-  fragmentPins.appendChild(renderMapPin(ADS));
-  fragmentCards.appendChild(renderCard(ADS));
+  AD_PARAMETERS = {
+    author,
+    offer,
+    apartmentLocation};
+
 }
+
+ADS[i] = AD_PARAMETERS;
+fragmentPins.appendChild(renderMapPin(ADS[i]));
+fragmentCards.appendChild(renderCard(ADS[0]));
 
 cityMapPin.appendChild(fragmentPins);
 map.appendChild(fragmentCards);
