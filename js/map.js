@@ -20,6 +20,25 @@ var maxY = 650;
 
 // useful functions
 
+// переключатель
+
+var noticeForm = document.querySelector('.notice__form');
+var fieldset = document.querySelector('.fieldset');
+var mainPin = document.querySelector('.map__pin--main');
+
+function toggleForm() {
+  for (var i = 0; i < fieldset.length; i++) {
+    fieldset[i].disabled = !fieldset[i].disabled;
+  }
+}
+
+mainPin.addEventListener('mousup', function () {
+  noticeForm.classList.remove('.notice__form--disabled');
+  map.classList.remove('.map--faded');
+  toggleForm();
+  cityMapPin.appendChild(renderMapPin());
+});
+
 // случайное значение в диапазоне
 var getValueInRange = function (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -142,5 +161,5 @@ for (var i = 0; i < adsNumber; i++) {
 
 fragmentCards.appendChild(renderCard(ADS[0]));
 
-cityMapPin.appendChild(fragmentPins);
-map.appendChild(fragmentCards);
+// cityMapPin.appendChild(fragmentPins);
+// map.appendChild(fragmentCards);
