@@ -22,7 +22,7 @@ var maxY = 650;
 
 // переключатель
 
-var adForm = document.querySelector('.ad__form');
+var adForm = document.querySelector('.ad-form');
 var fieldset = document.querySelectorAll('.fieldset');
 var mainPin = document.querySelector('.map__pin--main');
 
@@ -33,10 +33,12 @@ function toggleForm() {
 }
 
 mainPin.addEventListener('mouseup', function () {
-  adForm.classList.remove('.ad__form--disabled');
+  adForm.classList.remove('.ad-form--disabled');
   map.classList.remove('.map--faded');
   toggleForm();
   cityMapPin.appendChild(renderMapPin());
+  cityMapPin.appendChild(fragmentPins);
+  map.appendChild(fragmentCards);
 });
 
 // случайное значение в диапазоне
@@ -49,9 +51,7 @@ var getRandomValue = function (array) {
   return array[Math.floor(Math.random() * array.length)];
 };
 
-// убирает класс .map--faded
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
 
 var cityMapPin = document.querySelector('.map__pins');
 var template = document.querySelector('template').content;
@@ -160,6 +160,3 @@ for (var i = 0; i < adsNumber; i++) {
 }
 
 fragmentCards.appendChild(renderCard(ADS[0]));
-
-cityMapPin.appendChild(fragmentPins);
-map.appendChild(fragmentCards);
