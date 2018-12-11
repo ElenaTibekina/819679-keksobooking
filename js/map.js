@@ -22,8 +22,8 @@ var maxY = 650;
 
 // переключатель
 
-var noticeForm = document.querySelector('.notice__form');
-var fieldset = document.querySelector('.fieldset');
+var adForm = document.querySelector('.ad__form');
+var fieldset = document.querySelectorAll('.fieldset');
 var mainPin = document.querySelector('.map__pin--main');
 
 function toggleForm() {
@@ -32,8 +32,8 @@ function toggleForm() {
   }
 }
 
-mainPin.addEventListener('mousup', function () {
-  noticeForm.classList.remove('.notice__form--disabled');
+mainPin.addEventListener('mouseup', function () {
+  adForm.classList.remove('.ad__form--disabled');
   map.classList.remove('.map--faded');
   toggleForm();
   cityMapPin.appendChild(renderMapPin());
@@ -161,5 +161,5 @@ for (var i = 0; i < adsNumber; i++) {
 
 fragmentCards.appendChild(renderCard(ADS[0]));
 
-// cityMapPin.appendChild(fragmentPins);
-// map.appendChild(fragmentCards);
+cityMapPin.appendChild(fragmentPins);
+map.appendChild(fragmentCards);
