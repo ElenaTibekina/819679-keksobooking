@@ -1,30 +1,42 @@
 'use strict';
 
 var ADS = [];
-var adsNumber = 8;
-var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-var minPrice = 1000;
-var maxPrice = 1000000;
-var TYPES = ['palace', 'flat', 'house', 'bungalo'];
-var minRoomsNumber = 1;
-var maxRoomsNumber = 5;
-var CHECK_TIME = ['12:00', '13:00', '14:00'];
-var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-var minGuests = 1;
-var maxGuests = 10;
-var minX = 300;
-var maxX = 900;
-var minY = 130;
-var maxY = 650;
 
-// useful functions
-
-// переключатель
-
+var map = document.querySelector('.map');
+var template = document.querySelector('template');
+var mapPin = document.querySelector('.map__pin');
+var cityMapPin = document.querySelector('.map__pins');
+var mapCard = template.querySelector('.map__card');
 var adForm = document.querySelector('.ad-form');
 var fieldset = document.querySelectorAll('.fieldset');
 var mainPin = document.querySelector('.map__pin--main');
+var pinWidth = 46;
+var pinHeight = 64;
+
+var adsObject = {
+  TITLES: ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'],
+  TYPES: ['palace', 'flat', 'house', 'bungalo'],
+  CHECK_TIME: ['12:00', '13:00', '14:00'],
+  FEATURES: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
+  ADS_NUMBER: 8,
+  MIN_PRICE: 1000,
+  MAX_PRICE: 1000000,
+  MIN_ROOMS_NUMBER: 1,
+  MAX_ROOMS_NUMBER: 5,
+  MIN_GUESTS: 1,
+  MAX_GUESTS: 10,
+  MIN_X: 300,
+  MAX_X: 900,
+  MIN_Y: 130,
+  MAX_Y: 650
+};
+
+/**
+var fragmentPins = document.createDocumentFragment();
+var fragmentCards = document.createDocumentFragment();
+// useful functions
+
+// переключатель
 
 function toggleForm() {
   for (var i = 0; i < fieldset.length; i++) {
@@ -51,15 +63,8 @@ var getRandomValue = function (array) {
   return array[Math.floor(Math.random() * array.length)];
 };
 
-var map = document.querySelector('.map');
-
-var cityMapPin = document.querySelector('.map__pins');
-var template = document.querySelector('template').content;
-
 // render mapPin from template
-var mapPin = document.querySelector('.map__pin');
-var pinWidth = 46;
-var pinHeight = 64;
+
 
 var renderMapPin = function () {
   var pinElement = mapPin.cloneNode(true);
@@ -70,8 +75,6 @@ var renderMapPin = function () {
 };
 
 // Rendering Card from template
-
-var mapCard = template.querySelector('.map__card');
 
 var renderCard = function () {
   var cardElement = mapCard.cloneNode(true);
@@ -123,22 +126,20 @@ var renderCard = function () {
 };
 
 // Create fragments
-var fragmentPins = document.createDocumentFragment();
-var fragmentCards = document.createDocumentFragment();
 
 // Create objects
 
-for (var i = 0; i < adsNumber; i++) {
+for (var i = 0; i < ADS_NUMBER; i++) {
   var author = {
     avatar: 'img/avatars/user0' + (i + 1) + '.png'
   };
   var offer = {
     title: getRandomValue(TITLES),
     address: '{{location.x}}, {{location.y}}',
-    price: getValueInRange(minPrice, maxPrice),
+    price: getValueInRange(MIN_PRICE, maxPrice),
     type: getRandomValue(TYPES),
-    rooms: getValueInRange(minRoomsNumber, maxRoomsNumber),
-    guests: getValueInRange(minGuests, maxGuests),
+    rooms: getValueInRange(MIN_ROOMS_NUMBER, MAX_ROOMS_NUMBER),
+    guests: getValueInRange(MIN_GUESTS, MAX_GUESTS),
     checkin: getRandomValue(CHECK_TIME),
     checkout: getRandomValue(CHECK_TIME),
     features: [],
@@ -147,8 +148,8 @@ for (var i = 0; i < adsNumber; i++) {
   };
 
   var apartmentLocation = {
-    x: getValueInRange(minX, maxX),
-    y: getValueInRange(minY, maxY)
+    x: getValueInRange(MIN_X, MAX_X),
+    y: getValueInRange(MIN_Y, MAX_Y)
   };
 
   ADS[i] = {
@@ -160,3 +161,4 @@ for (var i = 0; i < adsNumber; i++) {
 }
 
 fragmentCards.appendChild(renderCard(ADS[0]));
+*/
