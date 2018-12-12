@@ -6,9 +6,9 @@ var mapPin = document.querySelector('.map__pin');
 var cityMapPin = document.querySelector('.map__pins');
 var mapCard = template.querySelector('.map__card');
 var adForm = document.querySelector('.ad-form');
-var fieldset = document.querySelectorAll('.fieldset');
+var fieldset = document.querySelectorAll('fieldset');
 var mainPin = document.querySelector('.map__pin--main');
-
+var pin = document.querySelector('#pin').content.querySelector('.map__pin');
 var PIN_WIDTH = 46;
 var PIN_HEIGHT = 64;
 var ADS = [];
@@ -83,10 +83,10 @@ ADS = composePinsData();
 
 // render mapPin from template
 var renderMapPin = function (adInfo) {
-  var pinElement = mapPin.cloneNode(true);
+  var pinElement = pin.cloneNode(true);
   pinElement.querySelector('img').src = adInfo.author;
-  pinElement.style.left = (adInfo.locationX - PIN_WIDTH) + 'px';
-  pinElement.style.top = (adInfo.locationY - PIN_HEIGHT) + 'px';
+  pinElement.style.left = (adInfo.location.x - PIN_WIDTH) + 'px';
+  pinElement.style.top = (adInfo.location.y - PIN_HEIGHT) + 'px';
   return pinElement;
 };
 
@@ -144,16 +144,16 @@ mainPin.addEventListener('mouseup', function () {
   adForm.classList.remove('.ad-form--disabled');
   map.classList.remove('.map--faded');
   toggleForm();
-  var fragmentPins = document.createDocumentFragment();
-  var fragmentCards = document.createDocumentFragment();
-  cityMapPin.appendChild(renderMapPin());
-  cityMapPin.appendChild(fragmentPins);
-  map.appendChild(fragmentCards);
+  for (var i = 0; i < ADS.length; i++) {
+    map.appendChild(renderMapPin(ADS[i]));
+  }
 });
 
 /**
 var fragmentPins = document.createDocumentFragment();
 var fragmentCards = document.createDocumentFragment();
+  cityMapPin.appendChild(fragmentPins);
+  map.appendChild(fragmentCards);
 // useful functions
 
 mainPin.addEventListener('mouseup', function () {
