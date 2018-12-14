@@ -86,7 +86,7 @@ ADS = composePinsData();
 var renderMapPin = function (adInfo) {
   var pinElement = pin.cloneNode(true);
   pinElement.querySelector('img').src = adInfo.author.avatar;
-  pinElement.style.left = (adInfo.location.x - PIN_WIDTH) + 'px';
+  pinElement.style.left = (adInfo.location.x - (PIN_WIDTH / 2)) + 'px';
   pinElement.style.top = (adInfo.location.y - PIN_HEIGHT) + 'px';
   pinElement.addEventListener('click', function (evt) {
     fragmentCards.appendChild(renderCard(adInfo));
@@ -99,6 +99,11 @@ var renderMapPin = function (adInfo) {
 // Rendering Card from template
 var renderCard = function (adInfo) {
   var cardElement = mapCard.cloneNode(true);
+
+  var closePopupButton = mapCard.querySelector('.popup__close');
+  closePopupButton.addEventListener('click', function () {
+    cardElement.classList.remove('map__card');
+  });
 
   var getHouseType = function (value) {
     if (value === 'flat') {
@@ -141,7 +146,7 @@ var renderCard = function (adInfo) {
   cardElement.querySelector('.popup__description').content = adInfo.offer.description;
   cardElement.querySelector('.popup__avatar').src = adInfo.author.avatar;
   cardElement.querySelector('.popup__photo').src = adInfo.offer.photos;
-  cardElement.style.left = (adInfo.locationX - PIN_WIDTH) + 'px';
+  cardElement.style.left = (adInfo.locationX - (PIN_WIDTH / 2)) + 'px';
   cardElement.style.top = (adInfo.locationY - PIN_HEIGHT) + 'px';
 
   return cardElement;
@@ -154,6 +159,7 @@ mainPin.addEventListener('mouseup', function () {
   for (var i = 0; i < ADS.length; i++) {
     map.appendChild(renderMapPin(ADS[i]));
   }
+
 });
 
 // create fragments
