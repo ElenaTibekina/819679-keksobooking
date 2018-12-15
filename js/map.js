@@ -28,6 +28,8 @@ var MIN_X = 300;
 var MAX_X = 900;
 var MIN_Y = 130;
 var MAX_Y = 650;
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 
 // переключатель
 var toggleForm = function () {
@@ -88,7 +90,7 @@ var renderMapPin = function (adInfo) {
   pinElement.querySelector('img').src = adInfo.author.avatar;
   pinElement.style.left = (adInfo.location.x - (PIN_WIDTH / 2)) + 'px';
   pinElement.style.top = (adInfo.location.y - PIN_HEIGHT) + 'px';
-  pinElement.addEventListener('click', function (evt) {
+  pinElement.addEventListener('click', function () {
     fragmentCards.appendChild(renderCard(adInfo));
     map.appendChild(fragmentCards);
     cityMapPin.appendChild(fragmentPins);
@@ -98,11 +100,26 @@ var renderMapPin = function (adInfo) {
 
 // Rendering Card from template
 var renderCard = function (adInfo) {
+
+  // close active card
+  var activeCard = document.querySelector('.popup');
+  if (activeCard) {
+    closePopupButton();
+  }
+
   var cardElement = mapCard.cloneNode(true);
 
-  var closePopupButton = mapCard.querySelector('.popup__close');
+  // close popup
+  var closePopupButton = cardElement.querySelector('.popup__close');
   closePopupButton.addEventListener('click', function () {
-    cardElement.classList.remove('map__card');
+    cardElement.remove();
+  });
+
+  // close popup ESC
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      cardElement.remove();
+    }
   });
 
   var getHouseType = function (value) {
