@@ -9,7 +9,7 @@ var mainPin = document.querySelector('.map__pin--main');
 var pin = document.querySelector('#pin').content.querySelector('.map__pin');
 var PIN_WIDTH = 46;
 var PIN_HEIGHT = 64;
-var ADS = [];
+var ads = [];
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var CHECK_TIME = ['12:00', '13:00', '14:00'];
@@ -28,9 +28,9 @@ var ESC_KEYCODE = 27;
 
 // переключатель
 var toggleForm = function () {
-  for (var i = 0; i < ADS.length; i++) {
+  for (var i = 0; i < ads.length; i++) {
     fieldset[i].disabled = !fieldset[i].disabled;
-    renderMapPin(ADS[i]);
+    renderMapPin(ads[i]);
   }
 };
 
@@ -77,7 +77,7 @@ var composePinsData = function () {
   } return ADS;
 };
 
-ADS = composePinsData();
+ads = composePinsData();
 
 // render mapPin from template
 var renderMapPin = function (adInfo) {
@@ -169,8 +169,8 @@ mainPin.addEventListener('mouseup', function () {
   adForm.classList.remove('ad-form--disabled');
   map.classList.remove('map--faded');
   toggleForm();
-  for (var i = 0; i < ADS.length; i++) {
-    map.appendChild(renderMapPin(ADS[i]));
+  for (var i = 0; i < ads.length; i++) {
+    map.appendChild(renderMapPin(ads[i]));
   }
 
 });
