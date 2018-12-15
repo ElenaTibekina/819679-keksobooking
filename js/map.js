@@ -5,6 +5,7 @@ var cityMapPin = document.querySelector('.map__pins');
 var mapCard = document.querySelector('#card').content.querySelector('.map__card');
 var adForm = document.querySelector('.ad-form');
 var fieldset = document.querySelectorAll('fieldset');
+var FIELDSETS = [];
 var inputAddress = adForm.querySelector('#address');
 var mainPin = document.querySelector('.map__pin--main');
 var pin = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -26,15 +27,17 @@ var MAX_X = 900;
 var MIN_Y = 130;
 var MAX_Y = 650;
 var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
 var cardElement = mapCard.cloneNode(true);
 var currentCard;
 
 // переключатель
 var toggleForm = function () {
-  for (var i = 0; i < ads.length; i++) {
-    fieldset[i].disabled = !fieldset[i].disabled;
-    renderMapPin(ads[i]);
+  for (var i; i < FIELDSETS.length; i++) {
+    if (fieldset.disabled) {
+      adForm.classList.remove('disabled');
+    } else {
+      adForm.classList.add('disabled');
+    }
   }
 };
 
@@ -95,13 +98,6 @@ var renderMapPin = function (adInfo) {
     currentCard = cardElement;
     map.appendChild(fragmentCards);
     cityMapPin.appendChild(fragmentPins);
-  });
-  pinElement.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      fragmentCards.appendChild(renderCard(adInfo));
-      map.appendChild(fragmentCards);
-      cityMapPin.appendChild(fragmentPins);
-    }
   });
   return pinElement;
 };
