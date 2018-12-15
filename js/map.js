@@ -1,8 +1,6 @@
 'use strict';
 
 var map = document.querySelector('.map');
-var template = document.querySelector('template');
-var mapPin = document.querySelector('.map__pin');
 var cityMapPin = document.querySelector('.map__pins');
 var mapCard = document.querySelector('#card').content.querySelector('.map__card');
 var adForm = document.querySelector('.ad-form');
@@ -15,8 +13,6 @@ var ADS = [];
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var CHECK_TIME = ['12:00', '13:00', '14:00'];
-var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var ADS_NUMBER = 8;
 var MIN_PRICE = 1000;
 var MAX_PRICE = 1000000;
@@ -29,7 +25,6 @@ var MAX_X = 900;
 var MIN_Y = 130;
 var MAX_Y = 650;
 var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
 
 // переключатель
 var toggleForm = function () {
@@ -132,6 +127,7 @@ var renderCard = function (adInfo) {
     } else if (value === 'palace') {
       return 'Дворец';
     }
+    return value;
   };
 
   var addFeatureItem = function (array) {
