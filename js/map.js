@@ -4,8 +4,7 @@ var map = document.querySelector('.map');
 var cityMapPin = document.querySelector('.map__pins');
 var mapCard = document.querySelector('#card').content.querySelector('.map__card');
 var adForm = document.querySelector('.ad-form');
-var fieldset = document.querySelectorAll('fieldset');
-var FIELDSETS = [];
+var fieldsets = document.querySelectorAll('fieldset');
 var inputAddress = adForm.querySelector('#address');
 var mainPin = document.querySelector('.map__pin--main');
 var pin = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -32,8 +31,8 @@ var currentCard;
 
 // переключатель
 var toggleForm = function () {
-  for (var i; i < FIELDSETS.length; i++) {
-    if (fieldset.disabled) {
+  for (var i; i < fieldsets.length; i++) {
+    if (fieldsets.disabled) {
       adForm.classList.remove('disabled');
     } else {
       adForm.classList.add('disabled');
@@ -238,4 +237,44 @@ selectCheckIn.addEventListener('change', function () {
 
 selectCheckOut.addEventListener('change', function () {
   synchCheckTime(selectCheckOut, selectCheckIn);
+});
+
+// synch rooms and guests
+var inputRoomNumber = adForm.querySelector('#room_number');
+var inputCapacity = adForm.querySelector('#capacity');
+var inputRoomNumberOptions = inputRoomNumber.querySelectorAll('option');
+var inputCapacityOptions = inputCapacity.querySelectorAll('option');
+
+var disableSelectOptions = function (roomsElement, arrGuests) {
+  for (var j; j < arrGuests.length; j++) {
+    if (arrGuests.value > roomsElement.value) {
+      arrGuests[j].setAttribute('disabled', true);
+    } else if ((arrGuests[j].value <= roomsElement.value) && (roomsElement.value !== '100') && (arrGuests[j].value !== '0')) {
+      arrGuests[j].removeAttribute('disabled');
+    } else if (arrGuests[j].value === '0' && roomsElement.value !== '100') {
+      arrGuests[j].setAttribute('disabled', true);
+    } else if (arrGuests[j].value === '0' && roomsElement.value === '100') {
+      arrGuests[j].removeAttribute('disabled');
+    } else if (arrGuests[j].value !== '0' && roomsElement.value === '100') {
+      arrGuests[j].setAttribute('disabled', true);
+    }
+  }
+};
+
+var roomCapacityChange = function (arrRooms, arrGuests) {
+  for (var j = 0; j < arrRooms.length; j++) {
+    if (inputRoomNumber.value === arrRooms[j].value && arrRooms[j].value !== '100') {
+      inputCapacity.value = arrRooms[j].value;
+      disableSelectOptions(arrRooms[j], arrGuests);
+    } else if (inputRoomNumber.value === arrRooms[j].value && arrRooms[j].value === '100') {
+      inputCapacity.value = '0';
+      disableSelectOptions(arrRooms[j], arrGuests);
+    }
+  }
+};
+
+inputCapacity.value = '1';
+
+inputRoomNumber.addEventListener('change', function () {
+  roomCapacityChange(inputRoomNumberOptions, inputCapacityOptions);
 });
