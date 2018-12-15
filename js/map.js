@@ -179,6 +179,7 @@ var renderCard = function (adInfo) {
   return cardElement;
 };
 
+// mouseup active state
 mainPin.addEventListener('mouseup', function () {
   adForm.classList.remove('ad-form--disabled');
   map.classList.remove('map--faded');
@@ -188,10 +189,10 @@ mainPin.addEventListener('mouseup', function () {
   }
 });
 
-var checkRequiredField = function (element, event) {
+// address
+var checkRequiredField = function (element, evt) {
   if (!element.value) {
-    event.preventDefault();
-    element.focus();
+    evt.preventDefault();
   }
 };
 
@@ -202,3 +203,43 @@ adForm.addEventListener('submit', function (evt) {
 // create fragments
 var fragmentPins = document.createDocumentFragment();
 var fragmentCards = document.createDocumentFragment();
+
+// synch #type and #price
+var inputTypeHouse = adForm.querySelector('#type');
+var inputPrice = adForm.querySelector('#price');
+
+var synchTypeAndPrice = function () {
+  if (inputTypeHouse.value === 'bungalo') {
+    inputPrice.placeholder = '0';
+  } else if (inputTypeHouse.value === 'flat') {
+    inputPrice.placeholder = '1000';
+  } else if (inputTypeHouse.value === 'house') {
+    inputPrice.placeholder = '5000';
+  } else if (inputTypeHouse.value === 'palace') {
+    inputPrice.placeholder = '10000';
+  }
+};
+
+inputTypeHouse.addEventListener('change', synchTypeAndPrice);
+
+// synch checktime
+var selectCheckIn = adForm.querySelector('#timein');
+var selectCheckOut = adForm.querySelector('#timeout');
+
+var synchCheckTime = function (selectIn, selectOut) {
+  if (selectIn.value === '12:00') {
+    selectOut.value = '12:00';
+  } else if (selectIn.value === '13:00') {
+    selectOut.value = '13:00';
+  } else if (selectIn.value === '14:00') {
+    selectOut.value = '14:00';
+  }
+};
+
+selectCheckIn.addEventListener('change', function () {
+  synchCheckTime(selectCheckIn, selectCheckOut);
+});
+
+selectCheckOut.addEventListener('change', function () {
+  synchCheckTime(selectCheckOut, selectCheckIn);
+});
