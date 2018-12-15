@@ -5,6 +5,7 @@ var cityMapPin = document.querySelector('.map__pins');
 var mapCard = document.querySelector('#card').content.querySelector('.map__card');
 var adForm = document.querySelector('.ad-form');
 var fieldset = document.querySelectorAll('fieldset');
+var inputAddress = adForm.querySelector('#address');
 var mainPin = document.querySelector('.map__pin--main');
 var pin = document.querySelector('#pin').content.querySelector('.map__pin');
 var PIN_WIDTH = 46;
@@ -25,6 +26,9 @@ var MAX_X = 900;
 var MIN_Y = 130;
 var MAX_Y = 650;
 var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+var cardElement = mapCard.cloneNode(true);
+var currentCard;
 
 // переключатель
 var toggleForm = function () {
@@ -86,9 +90,18 @@ var renderMapPin = function (adInfo) {
   pinElement.style.left = (adInfo.location.x - (PIN_WIDTH / 2)) + 'px';
   pinElement.style.top = (adInfo.location.y - PIN_HEIGHT) + 'px';
   pinElement.addEventListener('click', function () {
+    currentCard = cardElement;
     fragmentCards.appendChild(renderCard(adInfo));
+    currentCard = cardElement;
     map.appendChild(fragmentCards);
     cityMapPin.appendChild(fragmentPins);
+  });
+  pinElement.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      fragmentCards.appendChild(renderCard(adInfo));
+      map.appendChild(fragmentCards);
+      cityMapPin.appendChild(fragmentPins);
+    }
   });
   return pinElement;
 };
@@ -99,14 +112,15 @@ var renderCard = function (adInfo) {
   // close active card
   var activeCard = document.querySelector('.popup');
   if (activeCard) {
-    closePopupButton();
+    activeCard.remove();
   }
 
-  var cardElement = mapCard.cloneNode(true);
+  cardElement = mapCard.cloneNode(true);
 
   // close popup
   var closePopupButton = cardElement.querySelector('.popup__close');
   closePopupButton.addEventListener('click', function () {
+    currentCard = null;
     cardElement.remove();
   });
 
@@ -172,7 +186,17 @@ mainPin.addEventListener('mouseup', function () {
   for (var i = 0; i < ads.length; i++) {
     map.appendChild(renderMapPin(ads[i]));
   }
+});
 
+var checkRequiredField = function (element, event) {
+  if (!element.value) {
+    event.preventDefault();
+    element.focus();
+  }
+};
+
+adForm.addEventListener('submit', function (evt) {
+  checkRequiredField(inputAddress, evt);
 });
 
 // create fragments
