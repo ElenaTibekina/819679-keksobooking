@@ -12,10 +12,6 @@ var PIN_WIDTH = 46;
 var PIN_HEIGHT = 64;
 // var MAP_WIDTH = 1200;
 // var MAP_HEIGHT = 630;
-var MAIN_PIN_X_START = 570;
-var MAIN_PIN_Y_START = 375;
-var MAIN_PIN_WIDTH_START = 40;
-var MAIN_PIN_HEIGHT_START = 44;
 
 var ads = [];
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
@@ -188,7 +184,37 @@ mainPin.addEventListener('mouseup', function () {
   for (var i = 0; i < ads.length; i++) {
     map.appendChild(renderMapPin(ads[i]));
   }
-  inputAddress.value = (MAIN_PIN_X_START + (MAIN_PIN_WIDTH_START / 2)) + ', ' + (MAIN_PIN_Y_START + (MAIN_PIN_HEIGHT_START / 2));
+  mainPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
+      mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+    };
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      inputAddress.value = (mainPin.style.left + PIN_WIDTH / 2) + ', ' + (mainPin.style.top + PIN_HEIGHT);
+    };
+    document.addEventListener('mouseup', onMouseUp);
+  });
 });
 
 // address
