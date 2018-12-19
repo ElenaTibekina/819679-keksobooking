@@ -211,9 +211,10 @@ mainPin.addEventListener('mouseup', function () {
       upEvt.preventDefault();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-      inputAddress.value = (mainPin.style.left + PIN_WIDTH / 2) + ', ' + (mainPin.style.top + PIN_HEIGHT);
+      inputAddress.value = parseFloat(mainPin.style.left + PIN_WIDTH / 2) + ', ' + parseFloat(mainPin.style.top + PIN_HEIGHT);
     };
     document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mousemove', onMouseMove);
   });
 });
 
