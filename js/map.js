@@ -249,6 +249,18 @@ var synchTypeAndPrice = function () {
   }
 };
 
+var minPriceAndTypeDependence = {
+  bungalo: '0',
+  flat: '1000',
+  house: '5000',
+  palace: '10000'
+};
+
+var synchTypeAndMinPrice = function () {
+  inputPrice.min = minPriceAndTypeDependence[inputTypeHouse.value];
+};
+
+inputTypeHouse.addEventListener('change', synchTypeAndMinPrice);
 inputTypeHouse.addEventListener('change', synchTypeAndPrice);
 
 // synch checktime
