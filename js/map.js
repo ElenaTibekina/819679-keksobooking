@@ -210,7 +210,7 @@ mainPin.addEventListener('mousedown', function (evt) {
         moveEvt.preventDefault();
       }
     };
-
+    checkMapCoords();
     mainPin.style.top = mainPinTop + 'px';
     mainPin.style.left = mainPinLeft + 'px';
   };
@@ -225,7 +225,7 @@ mainPin.addEventListener('mousedown', function (evt) {
     }
 
     if (dragged) {
-      var onClickPreventDefault = function (evt) {
+      var onClickPreventDefault = function () {
         evt.preventDefault();
         mainPin.removeEventListener('click', onClickPreventDefault);
       };
