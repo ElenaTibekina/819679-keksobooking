@@ -175,7 +175,7 @@ var renderCard = function (adInfo) {
 };
 
 // mouseup active state
-var MAP_WIDTH = 1200;
+var MAP_WIDTH = 1165;
 var MAP_HEIGHT = 630;
 var MIN_ACTIVE_MAP_X = 0;
 var MIN_ACTIVE_MAP_Y = 130;
