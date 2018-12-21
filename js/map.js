@@ -200,9 +200,21 @@ mainPin.addEventListener('mousedown', function (evt) {
       y: moveEvt.clientY
     };
 
-    mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
-    mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+    var mainPinTop = mainPin.offsetTop - shift.y;
+    var mainPinLeft = mainPin.offsetLeft - shift.x;
+
+    var checkMapCoords = function () {
+      if (mainPinTop < MIN_ACTIVE_MAP_Y || mainPinTop > MAP_HEIGHT) {
+        moveEvt.preventDefault();
+      } if (mainPinLeft < MIN_ACTIVE_MAP_X || mainPinLeft > MAP_WIDTH) {
+        moveEvt.preventDefault();
+      }
+    };
+
+    mainPin.style.top = mainPinTop + 'px';
+    mainPin.style.left = mainPinLeft + 'px';
   };
+
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
     adForm.classList.remove('ad-form--disabled');
