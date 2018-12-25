@@ -29,10 +29,10 @@
     PIN_WIDTH: 46,
     PIN_HEIGHT: 64,
     ESC_KEYCODE: 27,
-    // cardElement: currentCard,
+    cardElement: null,
     map: document.querySelector('.map'),
     adForm: document.querySelector('.ad-form'),
     mainPin: document.querySelector('.map__pin--main'),
-    // currentCard
+    currentCard: null
   };
 })();
