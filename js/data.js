@@ -47,9 +47,12 @@
       });
     } return ADS;
   };
-  window.data.ads = composePinsData();
 
   window.data = {
+    adInfo: composePinsData,
+    composePinsData: composePinsData,
     ads: []
   };
+
+  window.data.ads = composePinsData();
 })();

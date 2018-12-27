@@ -21,7 +21,7 @@
 
     // close popup ESC
     document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.util.ESC_KEYCODE) {
+      if (evt.keyCode === window.card.ESC_KEYCODE) {
         window.utils.cardElement.remove();
       }
     });
@@ -68,12 +68,16 @@
     window.utils.cardElement.querySelector('.popup__description').content = adInfo.offer.description;
     window.utils.cardElement.querySelector('.popup__avatar').src = adInfo.author.avatar;
     window.utils.cardElement.querySelector('.popup__photo').src = adInfo.offer.photos;
-    window.utils.cardElement.style.left = (adInfo.locationX - window.util.PIN_WIDTH / 2) + 'px';
-    window.utils.cardElement.style.top = (adInfo.locationY - window.util.PIN_HEIGHT) + 'px';
+    window.utils.cardElement.style.left = (adInfo.locationX - window.utils.PIN_WIDTH / 2) + 'px';
+    window.utils.cardElement.style.top = (adInfo.locationY - window.utils.PIN_HEIGHT) + 'px';
 
     return window.utils.cardElement;
   };
+
   window.card = {
-    renderCard: renderCard()
+    ESC_KEYCODE: 27,
+    renderCard: renderCard
   };
+
+  window.card.renderCard();
 })();

@@ -16,10 +16,9 @@
     });
     return pinElement;
   };
+
   window.pin = {
-    renderMapPin: renderMapPin()
+    renderMapPin: renderMapPin
   };
-  window.pin = {
-    renderMapPin: renderMapPin()
-  };
+  window.pin.renderMapPin();
 })();

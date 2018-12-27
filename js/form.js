@@ -97,11 +97,13 @@
   };
 
   window.utils.adForm.addEventListener('submit', function (evt) {
-    checkRequiredField(window.form.inputAddress, evt);
+    checkRequiredField(window.utils.inputAddress, evt);
   });
   window.form = {
+    synchTypeAndPrice: synchTypeAndPrice,
+    synchTypeAndMinPrice: synchTypeAndMinPrice,
+    synchCheckTime: synchCheckTime,
     inputTypeHouse: window.utils.adForm.querySelector('#type'),
     inputPrice: window.utils.adForm.querySelector('#price'),
-    inputAddress: window.utils.adForm.querySelector('#address')
   };
 })();

@@ -60,7 +60,7 @@
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-      window.form.inputAddress.value = parseFloat(window.utils.mainPin.style.left + window.utils.PIN_WIDTH / 2) + ', ' + parseFloat(window.utils.mainPin.style.top + window.utils.PIN_HEIGHT);
+      window.utils.inputAddress.value = parseFloat(window.utils.mainPin.style.left + window.utils.PIN_WIDTH / 2) + ', ' + parseFloat(window.utils.mainPin.style.top + window.utils.PIN_HEIGHT);
     };
     document.addEventListener('mouseup', onMouseUp);
     document.addEventListener('mousemove', onMouseMove);
