@@ -20,5 +20,5 @@
   window.pin = {
     renderMapPin: renderMapPin
   };
-  window.pin.renderMapPin();
+
 })();

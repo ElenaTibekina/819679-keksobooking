@@ -1,5 +1,12 @@
 'use strict';
 (function () {
+  window.form = {
+    synchTypeAndPrice: synchTypeAndPrice,
+    synchTypeAndMinPrice: synchTypeAndMinPrice,
+    synchCheckTime: synchCheckTime,
+    inputTypeHouse: window.utils.adForm.querySelector('#type'),
+    inputPrice: window.utils.adForm.querySelector('#price')
+  };
   // synch #type and #price
   var synchTypeAndPrice = function () {
     if (window.form.inputTypeHouse.value === 'bungalo') {
@@ -28,8 +35,8 @@
   window.form.inputTypeHouse.addEventListener('change', synchTypeAndPrice);
 
   // synch checktime
-  var selectCheckIn = window.form.adForm.querySelector('#timein');
-  var selectCheckOut = window.form.adForm.querySelector('#timeout');
+  var selectCheckIn = window.utils.adForm.querySelector('#timein');
+  var selectCheckOut = window.utils.adForm.querySelector('#timeout');
 
   var synchCheckTime = function (selectIn, selectOut) {
     if (selectIn.value === '12:00') {
@@ -99,11 +106,5 @@
   window.utils.adForm.addEventListener('submit', function (evt) {
     checkRequiredField(window.utils.inputAddress, evt);
   });
-  window.form = {
-    synchTypeAndPrice: synchTypeAndPrice,
-    synchTypeAndMinPrice: synchTypeAndMinPrice,
-    synchCheckTime: synchCheckTime,
-    inputTypeHouse: window.utils.adForm.querySelector('#type'),
-    inputPrice: window.utils.adForm.querySelector('#price'),
-  };
+
 })();

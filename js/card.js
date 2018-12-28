@@ -78,6 +78,4 @@
     ESC_KEYCODE: 27,
     renderCard: renderCard
   };
-
-  window.card.renderCard();
 })();
