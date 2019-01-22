@@ -35,7 +35,7 @@
     var errorElement = errorPopupTemplate.cloneNode(true);
     errorElement.textContent = message;
     var main = document.querySelector('main');
-    main.appendChild(errorElement);
+    main.appendChild(errorPopupTemplate);
   }
   window.backend = {
     load: load
