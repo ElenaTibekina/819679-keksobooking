@@ -31,7 +31,7 @@
     window.draganddrop.mouseDownEventListener();
   }
   function onError(message) {
-    var errorPopupTemplate = document.querySelector('#error').content.querySelector('.error__message');
+    var errorPopupTemplate = document.querySelector('#error').content.querySelector('.error');
     var errorElement = errorPopupTemplate.cloneNode(true);
     errorElement.textContent = message;
     var main = document.querySelector('main');
