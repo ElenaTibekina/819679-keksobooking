@@ -33,9 +33,10 @@
   function onError(message) {
     var errorPopupTemplate = document.querySelector('#error').content.querySelector('.error');
     var errorElement = errorPopupTemplate.cloneNode(true);
-    errorElement.textContent = message;
+    var errorMessage = errorElement.querySelector('.error__message');
+    errorMessage.textContent = message;
     var main = document.querySelector('main');
-    main.appendChild(errorPopupTemplate);
+    main.appendChild(errorElement);
   }
   window.backend = {
     load: load
