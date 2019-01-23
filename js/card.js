@@ -1,7 +1,7 @@
 'use strict';
 (function () {
   // Rendering Card from template
-  var renderCard = function (adInfo) {
+  var renderCard = function (data) {
     var mapCard = document.querySelector('#card').content.querySelector('.map__card');
 
     // close active card
@@ -57,19 +57,16 @@
       return FEATURE_ITEMS;
     };
 
-    window.utils.cardElement.querySelector('.popup__title').textContent = adInfo.offer.title;
-    window.utils.cardElement.querySelector('.popup__text--address').textContent = adInfo.offer.address;
-    window.utils.cardElement.querySelector('.popup__text--price').innerHTML = adInfo.offer.price + '&#x20bd;/ночь';
-    window.utils.cardElement.querySelector('h4').textContent = getHouseType(adInfo.offer.type);
-    window.utils.cardElement.querySelector('h4 + p').textContent = adInfo.offer.rooms + ' комнаты для ' + adInfo.offer.guests + ' гостей';
-    window.utils.cardElement.querySelector('h4 + p + p').textContent = 'Заезд после ' + adInfo.offer.checkin + ', выезд до ' + adInfo.offer.checkout;
-    window.utils.cardElement.querySelector('.popup__features').content = addFeatureItem(adInfo.offer.features);
-    window.utils.cardElement.querySelectorAll('.popup__features > li').content = addItemClasses(adInfo.offer.features);
-    window.utils.cardElement.querySelector('.popup__description').content = adInfo.offer.description;
-    window.utils.cardElement.querySelector('.popup__avatar').src = adInfo.author.avatar;
-    window.utils.cardElement.querySelector('.popup__photo').src = adInfo.offer.photos;
-    window.utils.cardElement.style.left = (adInfo.locationX - window.utils.PIN_WIDTH / 2) + 'px';
-    window.utils.cardElement.style.top = (adInfo.locationY - window.utils.PIN_HEIGHT) + 'px';
+    window.utils.cardElement.querySelector('.popup__title').textContent = data.offer.title;
+    window.utils.cardElement.querySelector('.popup__text--address').textContent = data.offer.address;
+    window.utils.cardElement.querySelector('.popup__text--price').innerHTML = data.offer.price + '&#x20bd;/ночь';
+    window.utils.cardElement.querySelector('h4').textContent = getHouseType(data.offer.type);
+    window.utils.cardElement.querySelector('h4 + p').textContent = data.offer.rooms + ' комнаты для ' + data.offer.guests + ' гостей';
+    window.utils.cardElement.querySelector('h4 + p + p').textContent = 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
+    window.utils.cardElement.querySelector('.popup__features').content = addFeatureItem(data.offer.features);
+    window.utils.cardElement.querySelectorAll('.popup__features > li').content = addItemClasses(data.offer.features);
+    window.utils.cardElement.querySelector('.popup__description').textContent = data.offer.description;
+    window.utils.cardElement.querySelector('.popup__avatar').src = data.author.avatar;
 
     return window.utils.cardElement;
   };
