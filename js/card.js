@@ -39,22 +39,33 @@
       return value;
     };
 
-    var addFeatureItem = function (array) {
-      var FEATURES_LIST_ELEMENTS = [];
-      for (var j = 0; j < array.length; j++) {
-        FEATURES_LIST_ELEMENTS[j] = '<li></li>';
-      }
-      var featuresList = FEATURES_LIST_ELEMENTS.join(' ');
-      return featuresList;
+    var createCardFeaturesFragment = function (features) {
+      var fragment = document.createDocumentFragment();
+
+      features.forEach(function (feature) {
+        var element = document.createElement('li');
+        element.className = 'popup__feature popup__feature--' + feature;
+        fragment.appendChild(element);
+      });
+
+      return fragment;
     };
 
-    var addItemClasses = function (array) {
-      var FEATURE_ITEMS = window.utils.cardElement.querySelectorAll('.popup__features > li');
-      for (var i = 0; i < array.length; i++) {
-        FEATURE_ITEMS[i].classList.add('feature');
-        FEATURE_ITEMS[i].classList.add('feature--' + array[i]);
-      }
-      return FEATURE_ITEMS;
+    var createCardPhotosFragment = function (photos) {
+      var fragment = document.createDocumentFragment();
+
+      photos.forEach(function (photo) {
+        var element = document.createElement('img');
+
+        element.className = 'popup__photo';
+        element.src = photo;
+        element.width = 45;
+        element.height = 40;
+
+        fragment.appendChild(element);
+      });
+
+      return fragment;
     };
 
     window.utils.cardElement.querySelector('.popup__title').textContent = data.offer.title;
@@ -63,10 +74,16 @@
     window.utils.cardElement.querySelector('h4').textContent = getHouseType(data.offer.type);
     window.utils.cardElement.querySelector('h4 + p').textContent = data.offer.rooms + ' комнаты для ' + data.offer.guests + ' гостей';
     window.utils.cardElement.querySelector('h4 + p + p').textContent = 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
-    window.utils.cardElement.querySelector('.popup__features').content = addFeatureItem(data.offer.features);
-    window.utils.cardElement.querySelectorAll('.popup__features > li').content = addItemClasses(data.offer.features);
     window.utils.cardElement.querySelector('.popup__description').textContent = data.offer.description;
     window.utils.cardElement.querySelector('.popup__avatar').src = data.author.avatar;
+
+    var cardFeaturesElement = window.utils.cardElement.querySelector('.popup__features');
+    cardFeaturesElement.innerHTML = '';
+    cardFeaturesElement.appendChild(createCardFeaturesFragment(data.offer.features));
+
+    var cardPhotosElement = window.utils.cardElement.querySelector('.popup__photos');
+    cardPhotosElement.innerHTML = '';
+    cardPhotosElement.appendChild(createCardPhotosFragment(data.offer.photos));
 
     return window.utils.cardElement;
   };
