@@ -1,97 +1,100 @@
 'use strict';
 (function () {
-  var filterFormElement = document.querySelector('.map__filters');
-  var formInputElements = filterFormElement.querySelectorAll('input[type="checkbox"]');
-  var formSelectElements = filterFormElement.querySelectorAll('select');
-
-  var byPrice = {
-    low: {
-      min: 0,
-      max: 10000
-    },
-    middle: {
-      min: 10000,
-      max: 50000
-    },
-    high: {
-      min: 50000,
-      max: Infinity
-    }
-  };
-
-  var enableElements = function (elements) {
-    Array.prototype.forEach.call(elements, function (element) {
-      element.removeAttribute('disabled');
-    });
-  };
-
-  var filterPriceElement = filterFormElement.querySelector('#housing-price');
-  var FILTER_FIELD_DEFAULT_VALUE = 'any';
-
-  var filterByPrice = function (data) {
-    var priceLimit = byPrice[filterPriceElement.value];
-    return filterPriceElement.value === FILTER_FIELD_DEFAULT_VALUE || data.offer.price >= priceLimit.min && data.offer.price <= priceLimit.max;
-  };
-
-  var filterBySelect = function (filterElement, data, fieldName) {
-    return filterElement.value === FILTER_FIELD_DEFAULT_VALUE || filterElement.value === data.offer[fieldName].toString();
-  };
-
-  var filterByFeatures = function (data) {
-    var checkboxFeaturesElements = Array.from(filterFormElement.querySelectorAll('input[type="checkbox"]'));
-    var features = Array
-      .from(checkboxFeaturesElements)
-      .filter(function (checkedFeature) {
-        return checkedFeature.checked;
-      })
-      .every(function (feature) {
-        return data.offer.features.indexOf(feature.value) !== -1;
-      });
-    return features;
-  };
-
+  var filterFormElement = document.querySelector('.map__filters-container');
+  var filterInputElements = filterFormElement.querySelectorAll('input');
+  var filterSelectElements = filterFormElement.querySelectorAll('select');
   var filterTypeElement = filterFormElement.querySelector('#housing-type');
+  var filterPriceElement = filterFormElement.querySelector('#housing-price');
   var filterRoomElement = filterFormElement.querySelector('#housing-rooms');
   var filterGuestsElement = filterFormElement.querySelector('#housing-guests');
-  var filter = function (offers) {
-    return offers.filter(function (data) {
-      return filterBySelect(filterTypeElement, data, 'type') &&
-        filterBySelect(filterRoomElement, data, 'rooms') &&
-        filterBySelect(filterGuestsElement, data, 'guests') &&
-        filterByPrice(data) &&
-        filterByFeatures(data);
-    });
+  var filterFeaturesElement = filterFormElement.querySelector('#housing-features');
+
+  var PRICE_RANGES = {
+    low: 10000,
+    high: 50000
   };
 
-  var DEBOUNCE_TIME = 500;
-  var createFilterFormHandler = function (onFilter, offers) {
-    return function () {
-      if (lastTimeout) {
-        window.clearTimeout(lastTimeout);
-      }
-      lastTimeout = window.setTimeout(function () {
-        onFilter(filter(offers));
-      }, DEBOUNCE_TIME);
-    };
+  var FILTERED_OFFERS_LENGTH = 5;
+
+  /** Данные с сервера */
+  var originalOffers;
+
+  /** Отфильтрованные пользователем объявления */
+  var filteredOffers;
+
+  var onLoadOffers = function (data) {
+    originalOffers = data;
+    filteredOffers = trimOffers(data);
+
+    window.pins.render(filteredOffers);
+    window.pin.cityMapPin.addEventListener('click', onOfferPinClick);
   };
 
-  var lastTimeout;
-  var onFilterFormChange;
-
-  window.filter = {
-    activate: function (offers, onFilter) {
-      enableElements(formInputElements);
-      enableElements(formSelectElements);
-
-      onFilterFormChange = createFilterFormHandler(onFilter, offers);
-
-      filterFormElement.addEventListener('change', onFilterFormChange);
-    },
-    deactivate: function () {
-      enableElements(formInputElements);
-      enableElements(formSelectElements);
-
-      filterFormElement.removeEventListener('change', onFilterFormChange);
-    }
+  var trimOffers = function (offers) {
+    return offers.slice(0, FILTERED_OFFERS_LENGTH);
   };
+
+  /**
+  var filtrationOffers = function (offers) {
+    var selectedTypeElement = filterTypeElement.options[filterTypeElement.selectedIndex];
+    var selectedPriceElement = filterPriceElement.options[filterPriceElement.selectedIndex];
+    var selectedRoomsElement = filterRoomElement.options[filterRoomElement.selectedIndex];
+    var selectedGuestsElement = filterGuestsElement.options[filterGuestsElement.selectedIndex];
+    var selectedFeaturesElements = filterFeaturesElement.querySelectorAll('input:checked');
+
+    console.log(selectedTypeElement);
+    console.log(selectedPriceElement);
+
+
+    var filteredOffers = offers
+        .filter(function (item) {
+          return filterTypeElement.value === item.offer.type;
+        })
+        .filter(
+          function (item) {
+            console.log(item);
+            return true;
+            // return item.offer.price >= priceLimit.min
+        });
+
+      // .filter(selectedPriceElement)
+      // .filter(selectedRoomsElement)
+      // .filter(selectedGuestsElement)
+      // .filter(selectedFeaturesElements);
+      console.log(filteredOffers);
+
+    return filteredOffers;
+  };
+
+  var onFiltersChanged = function () {
+    filtrationOffers(window.array.ads || []);
+  };
+
+
+  filterFormElement.addEventListener('change', onFiltersChanged);
+  */
+  // window.filter = {
+  //   activate: function () {
+  //     Array.prototype.forEach.call(filterInputElements, function (element) {
+  //       element.removeAttribute('disabled');
+  //     });
+  //     Array.prototype.forEach.call(filterSelectElements, function (element) {
+  //       element.removeAttribute('disabled');
+  //     });
+
+  //     window.pin.removePins();
+
+  //     filterFormElement.addEventListener('change', onFiltersChanged);
+  //   },
+  //   deactivate: function () {
+  //     Array.prototype.forEach.call(filterInputElements, function (element) {
+  //       element.setAttribute('disabled', '');
+  //     });
+  //     Array.prototype.forEach.call(filterSelectElements, function (element) {
+  //       element.setAttribute('disabled', '');
+  //     });
+
+  //     filterFormElement.removeEventListener('change', onFiltersChanged);
+  //   }
+  // };
 })();
